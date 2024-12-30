@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ all_module_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id="admin">
+<!-- Toggle Button for Small Screens -->
+<button id="sidebarToggle" class="btn d-md-none" type="button">
+    ☰
+</button>
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!--https://www.iconfont.cn-->
+        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <h3>SweetsParadise</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="big_nav">
+            <a href="{{url_for('index')}}" class="nav-link">
+                &nbsp;&nbsp;Homepage
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('product_sales_data')}}" class="nav-link">
+                &nbsp;&nbsp;Data Statistics
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('edit_product')}}" class="nav-link">
+                &nbsp;&nbsp;All Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('create')}}" class="nav-link">
+                &nbsp;&nbsp;Create Products
+            </a>
+        </li>
+        <li class="big_nav active">
+            <a href="{{url_for('order_admin', category='ALL')}}" class="nav-link">
+                &nbsp;&nbsp;Orders
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('customers')}}" class="nav-link">
+                &nbsp;&nbsp;Customers
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay for Blur Effect -->
+<div id="content-overlay"></div>
+<main id="content">
+    <div class="orders">
+            <div class="main selected">
+                <div class="order-item">
+                    <p><strong>User Id:</strong> {{ order.user_id }}</p>
+                    <p><strong>Order Id:</strong> {{ order.id }}</p>
+                    <p><strong>Order Status:</strong> {{ order.status.name }}</p>
+                    <p><strong>Total Price:</strong> {{ order.total_price }} 元</p>
+                    <p><strong>Order Date:</strong> {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    {% if not order.address %}
+                    <p><strong>Order Address:</strong>You haven't chosen the address</p>
+                    {% else %}
+                    <p><strong>Order Address:</strong>{{ order.address.country}} {{ order.address.city }} {{ order.address.detailed_address }}</p>
+                    {% endif %}
+                    {% if order.status.name == UNRECEIVED %}
+                    <form action="" method="post">
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button type="submit">confirm receipt</button>
+                    </form>
+                    {% endif %}
+                    <h2>Product Details</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>¥{{ item.price }}</td>
+                                <td>{{ item.quantity * item.price }} 元</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</main>
+
+</body>
+</html>

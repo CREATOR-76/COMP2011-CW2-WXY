@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ all_module_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id="admin">
+<!-- Toggle Button for Small Screens -->
+<button id="sidebarToggle" class="btn d-md-none" type="button">
+    ☰
+</button>
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!--https://www.iconfont.cn-->
+        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <h3>SweetsParadise</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="big_nav active">
+            <a href="{{url_for('index')}}" class="nav-link">
+                &nbsp;&nbsp;Homepage
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('product_sales_data')}}" class="nav-link">
+                &nbsp;&nbsp;Data Statistics
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('edit_product')}}" class="nav-link">
+                &nbsp;&nbsp;All Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('create')}}" class="nav-link">
+                &nbsp;&nbsp;Create Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('order_admin', category='ALL')}}" class="nav-link">
+                &nbsp;&nbsp;Orders
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('customers')}}" class="nav-link">
+                &nbsp;&nbsp;Customers
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay for Blur Effect -->
+<div id="content-overlay"></div>
+<main id="content">
+    <div class="row">
+    <!-- Welcome, Section -->
+        <div class="col-md-4 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold">Hello, Admin !!!</h5>
+                    <p class="card-text">Welcome back! Let's start working now!</p>
+                    <button class="btn btn-success btn-lg rounded-pill px-4">What's New!</button>
+                    <div class="mt-3 text-muted"><strong>{{ current_time }}</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body position-relative">
+                    <div class="card-body">
+                        <a href="{{url_for('product_sales_data')}}" class="btn btn-outline-secondary btn-sm position-absolute top-0 end-0 m-2 rounded-circle">
+                            ...
+                        </a>
+                        <h5 class="card-title font-weight-bold">Top Product</h5>
+                        <div class="card-text font-weight-bold">
+                            {{ product_top.name }}
+                            <img src="{{ product_top.image_url }}" alt="{{ product_top.name }}" class="main-image img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold">Edit Products</h5>
+                    <div class="row text-center">
+                        <div class="col-6">
+                        <a href="{{ url_for('edit_product')}}" class="text-decoration-none">
+                            <img src="../static/img/edit.png" alt="The icon of edit" class="img-fluid mb-2 small-icon">
+                            <h5 class="card-title">Edit</h5>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('create')}}" class="text-decoration-none">
+                            <img src="../static/img/create.png" alt="The icon of create" class="img-fluid mb-2 small-icon">
+                            <h5 class="card-title">Create</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ url_for('order_admin', category='ALL') }}" class="btn btn-outline-secondary btn-sm position-absolute top-0 end-0 m-2 rounded-circle">
+                        ...
+                    </a>
+                    <h5 class="card-title font-weight-bold">Order</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for order in order %}
+                        <li class="list-group-item d-flex justify-content-between">{{ order.id }} - {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }} - {{ order.status.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ url_for('customers') }}" class="btn btn-outline-secondary btn-sm position-absolute top-0 end-0 m-2 rounded-circle">
+                        ...
+                    </a>
+                    <h5 class="card-title font-weight-bold">Customers</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for action in action %}
+                        <li class="list-group-item d-flex justify-content-between">{{ action.user_id }} - {{ action.timestamp.strftime('%Y-%m-%d %H:%M:%S') }} - {{ action.action }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+         <a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+    </div>
+</main>
+
+</body>
+</html>

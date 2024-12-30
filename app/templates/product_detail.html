@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/add_number.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all' }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="product-detail-container">
+        <div class="product-images">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="main-image">
+            <div class="image-thumbnails">
+                {% for image in product.additional_images %}
+                <img src="{{ image }}" alt="Product Image" class="thumbnail">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="product-info">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">¥{{ product.price }}</p>
+            <p class="product-description">{{ product.description }}</p>
+            <p class="product-taste">{{ product.taste }}</p>
+            <p class="product-size">Size: {{ product.size }}</p>
+            <p class="monthly-sales">Monthly Sales: {{ product.monthly_sale }}</p>
+
+            <form action="{{ url_for('buy_product') }}" method="post">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <!-- Quantity Selector -->
+                <div class="quantity-selector">
+                    <button type="button" class="quantity-btn decrement">-</button>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                    <button type="button" class="quantity-btn increment">+</button>
+                </div>
+                <div class="product-actions">
+                    <button class="buy-now" type="submit" name="action" value="buy">Buy Now</button>
+                </div>
+            </form>
+            <div class="product-actions">
+                <button class="add-to-cart" type="button" data-product-id="{{ product.id }}">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

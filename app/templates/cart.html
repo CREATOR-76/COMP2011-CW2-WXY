@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all' }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link active" href="#">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid" id="cart">
+        <div class="container">
+            <h1>Shopping Cart</h1>
+            <table class="table table-hover">
+                <thead class="table_head">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if products %}
+                {% for product in products  %}
+                <tr>
+                    <th scope="row">
+                        <form action="{{ url_for('cart')}}" method="POST">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="action" value="choose">
+                            <input class="checkbox" type="checkbox" id="choose_checkbox"  name="choose_status" value="1" data-price="{{ product.subtotal }}"
+                                   {% if product.is_chosen %} checked {% endif %}
+                                   onchange="this.form.submit()" aria-label="choose_status">
+                        </form>
+                    </th>
+                    <td>
+                        <a href="{{ url_for('product_detail', product_id=product.id)}}">
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                        </a>
+                        {{ product.name }}
+                    </td>
+                    <td>${{ "%.2f"|format(product.price) }}</td>
+                    <td>
+                        <form action="{{ url_for('cart') }}" method="POST">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="action" value="update">
+                            <input type="number" name="quantity" value="{{ product.quantity }}" min="1" max='10' class="quantity-input">
+                            <button type="submit" class="btn btn-up">Update</button>
+                        </form>
+                    </td>
+                    <td>${{ "%.2f"|format(product.subtotal) }}</td>
+                    <td>
+                        <form action="{{ url_for('cart') }}" method="POST">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <th colspan="7">
+                        <h3>Your cart is empty. </h3>
+                        <a href="{{ url_for('products', category='all') }}">Continue Shopping</a>
+                    </th>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="container nothing">
+        </div>
+    </div>
+    <div class="cart-summary fixed-bottom d-flex">
+        <div class="left">
+            <input type="checkbox" id="select-all" aria-label="select-all"> ALL
+            <span>Select <span id="selected-count">{{ selected_count }}</span>&nbsp;products&nbsp;</span>
+        </div>
+        <div class="right">
+            <span>¥<span id="total-price">{{ total_price }}</span></span>
+             <form action="{{ url_for('cart') }}" method="POST">
+                 <input type="hidden" name="action" value="empty">
+                 <button type="submit" id="clear-cart">Empty cart</button>
+             </form>
+            <form action="{{ url_for('cart') }}" method="POST">
+                 <input type="hidden" name="action" value="pay">
+                 <button type="submit" id="pay">PAY</button>
+             </form>
+        </div>
+    </div>
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/cart.js"></script>
+</body>
+</html>

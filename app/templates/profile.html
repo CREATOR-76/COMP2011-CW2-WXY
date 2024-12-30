@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/modal.js"></script>
+    <script src="../static/js/flash.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all' }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link active" href="#">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid" id="profile">
+        <div class="profile-container">
+            <div class="profile-left">
+                <div class="profile-header">
+                    <form method="POST" enctype="multipart/form-data">
+                        <label for="avatar">
+                        <img src="{{ user.avatar_url or url_for('static', filename='../static/img/header.png') }}" class="avatar" alt="Avatar">
+                        </label>
+                        <input type="file" name="avatar" id="avatar" class="d-none" accept="image/*" onchange="this.form.submit()">
+                    </form>
+                    <div class="profile-info">
+                        <h2>{{ user.username }}</h2>
+                        <p>{{ user.email }}</p>
+                    </div>
+                    <div class="btn edit_profile">change</div>
+                </div>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">×</span>
+                        <div id="profileFrom">
+                            <h2 cass="modalTitle">Modify personal information</h2>
+                            <form method="POST" enctype="multipart/form-data">
+                                {{ form.hidden_tag() }}
+                                <div class="form-group">
+                                    <label class="form-label">{{ form.username.label }}</label>
+                                     {{ form.username( class="form-control", required=False)}}
+                                    {% for error in form.username.errors %}
+                                    <small class="error">{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label" >{{ form.email.label }}</div>
+                                    {{ form.email( class="form-control", required=False)}}
+                                    {% for error in form.email.errors %}
+                                    <small class="error">>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn">Update</button>
+                                <button type="button" class="btn" id="changePasswordBtn">Change Password</button>
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                     {% for category, message in messages %}
+                                       {% if category == 'success' %}
+                                        <li class="flash-message alert alert-success">
+                                            {{ message }}
+                                        </li>
+                                        {% elif category == 'fail' %}
+                                        <li class="flash-message alert alert-danger">
+                                            {{ message }}
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                            </form>
+                        </div>
+                        <!-- Form for updating password (hidden by default) -->
+                        <div id="passwordForm">
+                            <h2 cass="modalTitle">Change Password</h2>
+                            <form method="POST" enctype="multipart/form-data">
+                                {{ password_form.hidden_tag() }}
+                                <div class="form-group">
+                                    <div class="form-label" >{{ password_form.current_password.label }}</div>
+                                    {{ password_form.current_password( class="form-control", required=False, placeholder="Please enter your current password")}}
+                                    {% for error in password_form.current_password.errors %}
+                                    <small class="error">>{{ error }}</small>
+                                    {% endfor %}
+                                    <small class="form-text text-muted">(Password must contain at least one letter, one number, and one symbol.)</small>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label" >{{ password_form.new_password.label }}</div>
+                                    {{ password_form.new_password( class="form-control", required=False, placeholder="Please enter your new password")}}
+                                    {% for error in password_form.new_password.errors %}
+                                    <small class="error">>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label" >{{ password_form.confirm_new_password.label }}</div>
+                                    {{ password_form.confirm_new_password( class="form-control", required=False)}}
+                                    {% for error in password_form.confirm_new_password.errors %}
+                                    <small class="error">>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                <button type="submit" class="btn">Update Password</button>
+                                <button type="button" class="btn" id="backToInfoBtn">Back to Info</button>
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                     {% for category, message in messages %}
+                                       {% if category == 'success' %}
+                                        <li class="flash-message alert alert-success">
+                                            {{ message }}
+                                        </li>
+                                        {% elif category == 'fail' %}
+                                        <li class="flash-message alert alert-danger">
+                                            {{ message }}
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+            </div>
+            <div class="profile-right">
+                <div class="section">
+                    <h3>My order</h3>
+                    <div class="order-status-container">
+                        <div class="order-status">
+                            <a href="{{ url_for('orders', category='ALL') }}">
+                                <img src="../static/img/all.png">
+                                <h6>All Orders</h6>
+                            </a>
+                        </div>
+                        <div class="order-status">
+                            <a href="{{ url_for('orders', category='UNPAID') }}">
+                                <img src="../static/img/UNPAID.png">
+                                <h6>Pending Payment</h6>
+                            </a>
+                        </div>
+                        <div class="order-status">
+                            <a href="{{ url_for('orders', category='UNSHIPPED') }}">
+                                <img src="../static/img/UNSHIPPED.png">
+                                <h6>Pending Shipment</h6>
+                            </a>
+                        </div>
+                        <div class="order-status">
+                            <a href="{{url_for('orders', category='UNRECEIVED') }}">
+                                <img src="../static/img/UNRECEIVED.png">
+                                <h6>Pending Receipt</h6>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="address-header">
+                        <h3>Address</h3>
+                    </div>
+                    <!-- 默认地址 -->
+                    <div class="default-address">
+                        {% if default_address %}
+                        <p>contact_name:{{ default_address.contact_name }}</p>
+                        <p>contact_name:{{ default_address.phone_number }}</p>
+                        <p>Address:{{ default_address.country }} {{ default_address.city }} {{ default_address.detailed_address }}</p>
+                        {% else %}
+                        <p>There is no default address. Please add a default address.</p>
+                        {% endif %}
+                    </div>
+                    <!-- 更多地址按钮 -->
+                    <div class="more-address" onclick="window.location.href='profile/more-addresses'">
+                        More address
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>About Us</h3>
+                    <p>Welcome to SweetsParadise! We specialize in creating delicious, handcrafted cakes and pastries using only the finest ingredients. Whether you're celebrating a special occasion or treating yourself, our sweets are sure to delight.
+                    </p>
+                    <p>
+                        Thank you for choosing SweetsParadise — where every bite is a delight!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

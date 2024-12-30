@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category) }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="choose-wrap" id="order_page">
+        <div class="container-fluid">
+            <ul class="tab row">
+                <li class="tab-item col {% if category == 'ALL' %}active{% endif %}">
+                    <a href="{{ url_for('orders', category='ALL') }}">
+                        <img src="../static/img/all.png">
+                        All Orders
+                    </a>
+                </li>
+                <li class="tab-item col {% if category == 'UNPAID' %}active{% endif %}">
+                    <a href="{{ url_for('orders', category='UNPAID') }}">
+                        <img src="../static/img/UNPAID.png">
+                        Pending Payment
+                    </a>
+                </li>
+                <li class="tab-item col {% if category == 'UNSHIPPED' %}active{% endif %}">
+                    <a href="{{ url_for('orders', category='UNSHIPPED') }}">
+                        <img src="../static/img/UNSHIPPED.png">
+                        Pending Shipment
+                    </a>
+                </li>
+                <li class="tab-item col {% if category == 'UNRECEIVED' %}active{% endif %}">
+                    <a href="{{ url_for('orders', category='UNRECEIVED') }}">
+                        <img src="../static/img/UNRECEIVED.png">
+                        Pending Receipt
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="orders">
+            <div class="main selected">
+                {% for order in display_order %}
+                <div class="order-item">
+                    <p><strong>Order Id:</strong> {{ order.id }}</p>
+                    <p><strong>Order Status:</strong> {{ order.status.name }}</p>
+                    <p><strong>Total Price:</strong> {{ order.total_price }} 元</p>
+                    <p><strong>Order Date:</strong> {{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    {% if not order.address %}
+                    <p><strong>Order Address:</strong>You haven't chosen the address</p>
+                    {% else %}
+                    <p><strong>Order Address:</strong>{{ order.address.country}} {{ order.address.city }} {{ order.address.detailed_address }}</p>
+                    {% endif %}
+                    {% if order.status.name == 'UNRECEIVED' %}
+                    <form action="" method="post">
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button type="submit">confirm receipt</button>
+                    </form>
+                    {% endif %}
+                    {% if order.status.name == 'UNPAID' %}
+                    <a href="{{ url_for('payment',order_id=order.id) }}">PAY</a>
+                    {% endif %}
+
+                    <h2>Product Details</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>¥{{ item.price }}</td>
+                                <td>{{ item.quantity * item.price }} 元</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="page-container">
+            {% if current_page >1 %}
+            <!-- Arrow pointing to previous page -->
+            <a href="?page={{ current_page - 1 }}&category={{ category }}" class="page-btn" aria-label="Previous page">
+                &laquo;
+            </a>
+            {% endif %}
+
+            <!-- Home page -->
+            {% if current_page > 3 %}
+            <a href="?page=1&category={{ category }}" class="page-btn" aria-label="Page 1, First page">1</a>
+            <span class="ellipsis">...</span>
+            {% endif %}
+
+            <!-- The page number near the current page -->
+            {% for page_num in range(current_page - 2, current_page + 3) %}
+            {% if page_num > 0 and page_num <= total_pages %}
+            {% if page_num == current_page %}
+            <a href="?page={{ page_num }}&category={{ category }}"
+               class="page-btn active" aria-current="page"> {{ page_num }} </a>
+            {% else %}
+            <a href="?page={{ page_num }}&category={{ category }}"
+               class="page-btn" aria-label="Page {{ page_num }}"> {{ page_num }} </a>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            <!-- Trailing page -->
+            {% if current_page < total_pages - 2 %}
+            <span class="ellipsis" aria-hidden="true">...</span>
+            <a href="?page={{ total_pages }}&category={{ category }}" class="page-btn"  aria-label="Page {{ total_pages }}, Last page" >{{ total_pages }}</a>
+            {% endif %}
+
+            {% if current_page != total_pages and current_page >=1 %}
+            <!--  Arrow pointing to the next page -->
+            <a href="?page={{ current_page + 1 }}&category={{ category }}" class="page-btn" aria-label="Next page">
+                &raquo;
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

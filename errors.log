@@ -1,0 +1,38 @@
+2024-12-10 20:26:27,975 - app.views - ERROR - An error occurred while initializing data: Could not determine join condition between parent/child tables on relationship Product.category_id - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2024-12-10 20:29:30,497 - app.views - ERROR - An error occurred while initializing data: Could not determine join condition between parent/child tables on relationship Product.category_id - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2024-12-10 20:31:36,937 - app.views - ERROR - An error occurred while initializing data: (sqlite3.OperationalError) no such column: product.category_id
+[SQL: SELECT product.id AS product_id, product.name AS product_name, product.size AS product_size, product.taste AS product_taste, product.description AS product_description, product.price AS product_price, product.monthly_sale AS product_monthly_sale, product.image_url AS product_image_url, product.category_id AS product_category_id 
+FROM product
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2024-12-10 20:39:23,918 - app.views - ERROR - An error occurred while initializing data: (sqlite3.OperationalError) no such column: product.category_id
+[SQL: SELECT product.id AS product_id, product.name AS product_name, product.size AS product_size, product.taste AS product_taste, product.description AS product_description, product.price AS product_price, product.monthly_sale AS product_monthly_sale, product.image_url AS product_image_url, product.category_id AS product_category_id 
+FROM product
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2024-12-10 20:40:22,028 - app.views - ERROR - An error occurred while initializing data: (sqlite3.OperationalError) no such column: product.category_id
+[SQL: SELECT product.id AS product_id, product.name AS product_name, product.size AS product_size, product.taste AS product_taste, product.description AS product_description, product.price AS product_price, product.monthly_sale AS product_monthly_sale, product.image_url AS product_image_url, product.category_id AS product_category_id 
+FROM product
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2024-12-10 20:41:40,515 - app.views - ERROR - An error occurred while initializing data: (sqlite3.OperationalError) no such column: product.category_id
+[SQL: SELECT product.id AS product_id, product.name AS product_name, product.size AS product_size, product.taste AS product_taste, product.description AS product_description, product.price AS product_price, product.monthly_sale AS product_monthly_sale, product.image_url AS product_image_url, product.category_id AS product_category_id 
+FROM product
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2024-12-10 20:46:40,093 - app.views - ERROR - An error occurred while initializing data: (sqlite3.OperationalError) no such column: product.category_id
+[SQL: SELECT product.id AS product_id, product.name AS product_name, product.size AS product_size, product.taste AS product_taste, product.description AS product_description, product.price AS product_price, product.monthly_sale AS product_monthly_sale, product.image_url AS product_image_url, product.category_id AS product_category_id 
+FROM product
+ LIMIT ? OFFSET ?]
+[parameters: (1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2024-12-10 20:52:35,516 - app.views - ERROR - An error occurred while initializing data: [Errno 2] No such file or directory: 'static/data/category_product.xlsx'
+2024-12-10 20:53:20,717 - app.views - ERROR - An error occurred while initializing data: [Errno 2] No such file or directory: 'static/data/products.xlsx'
+2024-12-10 20:54:16,228 - app.views - ERROR - An error occurred while initializing data: [Errno 2] No such file or directory: '../static/data/products.xlsx'
+2024-12-10 20:55:02,531 - app.views - ERROR - An error occurred while initializing data: [Errno 2] No such file or directory: '../app/static/data/products.xlsx'
+2024-12-23 14:12:17,248 - app.views - ERROR - An error occurred while initializing data: Invalid hash method 'sha256'.
+2024-12-23 14:12:36,866 - app.views - ERROR - An error occurred while initializing data: Invalid hash method 'sha256'.

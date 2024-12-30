@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all'}}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- page content -->
+    <!-- slideshow -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="{{ url_for('product_detail', product_id=9)}}">
+                    <img src="../static/img/slider_1.jpg" class="d-block w-100" alt="The picture of chilled mango sago cream with pomelo">
+                    <div class="carousel-caption d-md-block">
+                        <h5>Chilled Mango Sago Cream with Pomelo</h5>
+                        <div class="d-md-block d-none">
+                            <p>A classic Chinese dessert you can't forget</p>
+                        </div>
+                        <div class="more1">Learn more...</div>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="{{ url_for('product_detail', product_id=34)}}">
+                    <img src="../static/img/slider_2.jpg" class="d-block w-100" alt="The picture of bloom">
+                    <div class="carousel-caption d-md-block slider_2">
+                        <h5>Bloom</h5>
+                        <div class="d-md-block d-none">
+                        <p>The layers of tiny crispy tarts are delicate</p>
+                        </div>
+                        <div class="more2">Learn more...</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+     <div class="Transition container-fluid">
+         <h3 class="display-1 h3">Welcome to SweetsParadise</h3>
+         <h3 class="h3">Indulge in the sweetest treats, where every bite feels like a little piece of heaven.</h3>
+     </div>
+    <div class="show">
+        <div class="container-fluid py-5">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="hover-card">
+                            <div class="card-img-overlay">
+                                <span class="hover-arrow">&rarr;</span>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ url_for('products', category='cake')}}">
+                                    <img src="{{ product_cake.image_url }}" alt="one image of cake">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text text-center mt-2">
+                        <h5 class="card-title">CAKE</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="hover-card">
+                            <div class="card-img-overlay">
+                                <span class="hover-arrow">&rarr;</span>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ url_for('products', category='bread')}}">
+                                    <img src="{{ product_bread.image_url }}" alt="one image of bread">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text text-center mt-2">
+                        <h5 class="card-title">BREAD</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="hover-card">
+                            <div class="card-img-overlay">
+                                <span class="hover-arrow">&rarr;</span>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ url_for('products', category='pastry')}}">
+                                    <img src="{{ product_pastry.image_url }}" alt="one image of pastry">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text text-center mt-2">
+                        <h5 class="card-title">PASTRY</h5>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="hover-card">
+                            <div class="card-img-overlay">
+                                <span class="hover-arrow">&rarr;</span>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ url_for('products', category='accessory')}}">
+                                    <img src="{{ product_accessory.image_url }}" alt="one image of accessory">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-text text-center mt-2">
+                        <h5 class="card-title">ACCESSORY</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid py-5 sell_well">
+            <div class="row text-center">
+                <h3>Top 4 Monthly Sales Products</h3>
+                {% for product in top_products%}
+                <div class="col-lg-3 col-md-6 card">
+                    <div class="card-body">
+                        <span class="number">{{ loop.index }}</span>
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                            <img src="{{ product.image_url }}" alt="image of top4 products">
+                        </a>
+                    </div>
+                    <div class="card-text text-center mt-2">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p> ¥{{ product.price }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

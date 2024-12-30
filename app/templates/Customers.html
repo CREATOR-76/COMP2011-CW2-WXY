@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ all_module_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id="admin">
+<!-- Toggle Button for Small Screens -->
+<button id="sidebarToggle" class="btn d-md-none" type="button">
+    ☰
+</button>
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!--https://www.iconfont.cn-->
+        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <h3>SweetsParadise</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="big_nav">
+            <a href="{{url_for('index')}}" class="nav-link">
+                &nbsp;&nbsp;Homepage
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('product_sales_data')}}" class="nav-link">
+                &nbsp;&nbsp;Data Statistics
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('edit_product')}}" class="nav-link">
+                &nbsp;&nbsp;All Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('create')}}" class="nav-link">
+                &nbsp;&nbsp;Create Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('order_admin', category='ALL')}}" class="nav-link">
+                &nbsp;&nbsp;Orders
+            </a>
+        </li>
+        <li class="big_nav active">
+            <a href="{{url_for('customers')}}" class="nav-link">
+                &nbsp;&nbsp;Customers
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay for Blur Effect -->
+<div id="content-overlay"></div>
+<main id="content">
+    <div class="container my-5">
+    <h2 class="text-center mb-4">User List</h2>
+    <div class="row">
+        {% for user in user %}
+        {% if user.is_admin==False %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-light">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ user.username }}</h5>
+                    <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
+                    <a href="{{ url_for('user_action', user_id=user.id) }}" class="btn btn-info btn-sm">View Actions</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+    
+</main>
+
+</body>
+</html>

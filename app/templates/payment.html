@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/flash.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all' }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="payment">
+        <h3>Order Total:</h3>
+        <div class="total-price">
+            ¥{{ order.total_price | round(2) }}
+        </div>
+        <div class="address-selection">
+            <h6>Selected Delivery Address:</h6>
+            {% if default_address %}
+            <div class="default_address">
+                <p>{{ default_address.contact_name }}:{{ default_address.phone_number }}</p>
+                <p>{{ default_address.country }} {{ default_address.city }} {{ default_address.detailed_address }}</p>
+            </div>
+                 <a href="{{ url_for('select_address', order_id=order.id) }}">Change Address</a>
+            {% else %}
+                <p>No default address set. Please choose an address.</p>
+                <a href="{{ url_for('select_address', order_id=order.id) }}">Select Address</a>
+            {% endif %}
+        </div>
+
+        <div class="payment-action">
+            <form action="{{ url_for('payment', order_id=order.id) }}" method="POST">
+            <input type="hidden" name="action" value="Confirm payment">
+            <button type="submit" class="btn btn-confirm">Confirm payment</button>
+        </form>
+        <form action="{{ url_for('payment', order_id=order.id) }}" method="POST">
+            <input type="hidden" name="action" value="Cancel payment">
+            <button type="submit" class="btn btn-cancel">Cancel payment</button>
+        </form>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        {% if category == 'success' %}
+        <li class="flash-message alert alert-success">
+            {{ message }}
+        </li>
+        {% elif category == 'fail' %}
+        <li class="flash-message alert alert-danger">
+            {{ message }}
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="../static/js/flash.js"></script>
+</body>
+</html>

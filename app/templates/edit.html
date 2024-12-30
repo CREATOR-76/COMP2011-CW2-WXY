@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ all_module_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id="admin">
+<!-- Toggle Button for Small Screens -->
+<button id="sidebarToggle" class="btn d-md-none" type="button">
+    ☰
+</button>
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!--https://www.iconfont.cn-->
+        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <h3>SweetsParadise</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="big_nav">
+            <a href="{{url_for('index')}}" class="nav-link">
+                &nbsp;&nbsp;Homepage
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('product_sales_data')}}" class="nav-link">
+                &nbsp;&nbsp;Data Statistics
+            </a>
+        </li>
+        <li class="big_nav active">
+            <a href="{{url_for('edit_product')}}" class="nav-link">
+                &nbsp;&nbsp;All Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('create')}}" class="nav-link">
+                &nbsp;&nbsp;Create Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('order_admin', category='ALL')}}" class="nav-link">
+                &nbsp;&nbsp;Orders
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('customers')}}" class="nav-link">
+                &nbsp;&nbsp;Customers
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay for Blur Effect -->
+<div id="content-overlay"></div>
+<main id="content">
+    <div class="product-detail-container">
+        <div class="product-info">
+            <form method="POST" class="row g-3">
+            {{ form.hidden_tag() }}
+            <div class="col-12">
+                <div class="form-label">{{form.name.label}}</div>
+                {{ form.name(class='form-control', required=False) }}
+                {% for error in form.name.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-md-12">
+                <div class="form-label">{{ form.size.label }}</div>
+                {{ form.size(class='form-control', required=False) }}
+                {% for error in form.size.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="col-form-label" >{{ form.taste.label }}</div>
+                {{ form.taste(class='form-control') }}
+                {% for error in form.taste .errors %}
+                <small lass="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="col-form-label">{{ form.description.label }}</div>
+                {{form.description(class="form-control textarea", rows="5", required=False)}}
+                {% for error in form.description.errors %}
+                <small class="error">>{{ error }}</small>
+                {% endfor %}
+            </div>
+                <div class="col-12">
+                <div class="col-form-label">{{ form.price.label }}</div>
+                {{form.price(class="form-control", required=False)}}
+                {% for error in form.price.errors %}
+                <small class="error">>{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-6">
+                <button type="submit" class="btn submit_btn">Save Chance</button>
+            </div>
+        </form>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            {% if category == 'success' %}
+            <li class="flash-message alert alert-success">
+                {{ message }}
+            </li>
+            {% elif category == 'fail' %}
+            <li class="flash-message alert alert-danger">
+                {{ message }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        </div>
+</main>
+
+</body>
+</html>

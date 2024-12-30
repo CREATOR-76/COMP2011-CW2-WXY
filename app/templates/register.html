@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+            </a>
+            <!-- Switch button: can be displayed on a small screen -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navigation link -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item me-4 ">
+                        <a class="nav-link" href="{{ url_for('home')}}">Home</a>
+                    </li>
+                    <!-- All products-->
+                    <li class="nav-item dropdown me-4">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='cake')}}">Cakes</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='bread')}}">Bread</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='pastry')}}">Pastry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <!-- Self-Pick -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="#">Self-Pick</a>
+                    </li>
+                    <!-- search -->
+                    <li class="nav-item me-4 search position-relative">
+                        <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
+                            <input type="hidden" name="search" value="search_products">
+                            <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
+                            <input type="hidden" name="category" value="{{ category if category else 'all' }}">
+                            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+                            <button type="submit" class="btn search-btn"></button>
+                        </form>
+                    </li>
+                    <!-- cart -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('cart')}}">
+                            <img src="../static/img/cart.png" alt="cart">
+                        </a>
+                    </li>
+                    <!-- My -->
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="{{ url_for('profile')}}">My</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="Register" class="container-fluid">
+        <div class="signup-form">
+            <div class="tips">
+                <h1>Create new account.</h1>
+            </div>
+            <form method="POST" action="{{ url_for('register') }}" name="register" id="RegistrationForm" class="row g-3" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="input-wrapper">
+                    <div class="form-label" >{{ form.username.label }}</div>
+                    {{ form.username( class="form-control", required=False, placeholder="The length of username should be 3-8.")}}
+                    {% for error in form.username.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+
+                    <div class="form-label" >{{ form.email.label }}</div>
+                    {{ form.email( class="form-control", required=False)}}
+                    {% for error in form.email.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+
+                    <div class="form-label" >{{ form.password.label }}</div>
+                    {{ form.password( class="form-control", required=False, placeholder="Must be 8~12")}}
+                    {% for error in form.password.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+                    <small class="form-text text-muted">(Password must contain at least one letter, one number, and one symbol.)</small>
+
+                    <div class="form-label" >{{ form.confirm_password.label }}</div>
+                    {{ form.confirm_password( class="form-control", required=False)}}
+                    {% for error in form.confirm_password.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <input type="submit" value="Submit" class="btn submit_btn w-100">
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                {% if category == 'success' %}
+                <li class="flash-message alert alert-success">
+                    {{ message }}
+                </li>
+                {% elif category == 'fail' %}
+                <li class="flash-message alert alert-danger">
+                    {{ message }}
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            <p class="fs-6">Already A Member?
+                <a class="login-into fs-6" href="{{ url_for('login') }}">Log in</a>
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+2024-12-10 21:17:31,125 - app - INFO - App started successfully.
+2024-12-10 21:17:31,334 - numexpr.utils - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-12-10 21:17:31,334 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2024-12-10 21:17:31,493 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-10 21:17:31,493 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-10 21:17:31,499 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2024-12-10 21:17:32,016 - app - INFO - App started successfully.
+2024-12-10 21:17:32,226 - numexpr.utils - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-12-10 21:17:32,227 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2024-12-10 21:17:32,364 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:17:32,373 - werkzeug - INFO -  * Debugger PIN: 138-755-027

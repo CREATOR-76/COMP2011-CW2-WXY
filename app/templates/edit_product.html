@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ all_module_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
+    <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/delete.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id="admin">
+<!-- Toggle Button for Small Screens -->
+<button id="sidebarToggle" class="btn d-md-none" type="button">
+    ☰
+</button>
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <!--https://www.iconfont.cn-->
+        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <h3>SweetsParadise</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <li class="big_nav">
+            <a href="{{url_for('index')}}" class="nav-link">
+                &nbsp;&nbsp;Homepage
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('product_sales_data')}}" class="nav-link">
+                &nbsp;&nbsp;Data Statistics
+            </a>
+        </li>
+        <li class="big_nav active">
+            <a href="{{url_for('edit_product')}}" class="nav-link">
+                &nbsp;&nbsp;All Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('create')}}" class="nav-link">
+                &nbsp;&nbsp;Create Products
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('order_admin', category='ALL')}}" class="nav-link">
+                &nbsp;&nbsp;Orders
+            </a>
+        </li>
+        <li class="big_nav">
+            <a href="{{url_for('customers')}}" class="nav-link">
+                &nbsp;&nbsp;Customers
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay for Blur Effect -->
+<div id="content-overlay"></div>
+<main id="content">
+    <div class="me-4 search position-relative">
+        <form class="d-flex" action="{{ url_for('edit_product') }}" method="get">
+            <input type="hidden" name="search" value="search_products">
+            <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
+            <button type="submit" class="btn search-btn"></button>
+        </form>
+    </div>
+    <div class="container" id="product" >
+        {% if (display_product | length == 0) and search_action %}
+        <div class="back">
+            <h3>No search results!</h3>
+            <a href="{{url_for('edit_product')}}" class="back_link">
+                <!--        https://www.iconfont.cn-->
+                <img src="../static/img/back.png" alt="Back to All">
+            </a>
+        </div>
+        {% else %}
+        <div class="row">
+            {% for product in display_product %}
+            <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
+                <div class="product-card">
+                    <a href="{{ url_for('edit', id=product.id) }}">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    <h5>{{ product.name }}</h5>
+                </a>
+                    <p class="price">¥{{ product.price }}</p>
+                    <p class="details">Size: {{ product.size }}</p>
+                    <p class="details">Monthly Sales: {{ product.monthly_sale }}</p>
+                    <form action="{{ url_for('edit_product') }}" method="POST">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button class="delete" type="submit" onclick="confirmDelete();">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="page-container">
+            {% if current_page >1 %}
+            <!-- Arrow pointing to previous page -->
+            <a href="?page={{ current_page - 1 }}&sort_by={{ sort_by }}&{{ request.args.get('content', '')}}" class="page-btn" aria-label="Previous page">
+                &laquo;
+            </a>
+            {% endif %}
+
+            <!-- Home page -->
+            {% if current_page > 3 %}
+            <a href="?page=1&content={{ request.args.get('content', '')}}&sort_by={{ sort_by }}" class="page-btn" aria-label="Page 1, First page">1</a>
+            <span class="ellipsis">...</span>
+            {% endif %}
+
+            <!-- The page number near the current page -->
+            {% for page_num in range(current_page - 2, current_page + 3) %}
+            {% if page_num > 0 and page_num <= total_pages %}
+            {% if page_num == current_page %}
+            <a href="?page={{ page_num }}&content={{ request.args.get('content', '')}}&sort_by={{ sort_by }}"
+               class="page-btn active" aria-current="page"> {{ page_num }} </a>
+            {% else %}
+            <a href="?page={{ page_num }}&content={{ request.args.get('content', '')}}&sort_by={{ sort_by }}"
+               class="page-btn" aria-label="Page {{ page_num }}"> {{ page_num }} </a>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            <!-- Trailing page -->
+            {% if current_page < total_pages - 2 %}
+            <span class="ellipsis" aria-hidden="true">...</span>
+            <a href="?page={{ total_pages }}&content={{ request.args.get('content', '')}}&sort_by={{ sort_by }}" class="page-btn"  aria-label="Page {{ total_pages }}, Last page" >{{ total_pages }}</a>
+            {% endif %}
+
+            {% if current_page != total_pages and current_page >=1 %}
+            <!--  Arrow pointing to the next page -->
+            <a href="?page={{ current_page + 1 }}&content={{ request.args.get('content', '')}}&sort_by={{ sort_by }}" class="page-btn" aria-label="Next page">
+                &raquo;
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+</body>
+</html>
