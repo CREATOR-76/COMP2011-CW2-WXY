@@ -5,6 +5,9 @@
     <title>More address</title>
     <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/flash.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -38,10 +41,6 @@
                             <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
                         </ul>
                     </li>
-                    <!-- Self-Pick -->
-                    <li class="nav-item me-4">
-                        <a class="nav-link" href="#">Self-Pick</a>
-                    </li>
                     <!-- search -->
                     <li class="nav-item me-4 search position-relative">
                          <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">
@@ -66,54 +65,75 @@
             </div>
         </div>
     </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            {% if category == 'success' %}
+            <li class="flash-message alert alert-success">
+                {{ message }}
+            </li>
+            {% elif category == 'fail' %}
+            <li class="flash-message alert alert-danger">
+                {{ message }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
     <div class="container_create">
-    <form action="" method="post" name="address" id="address" class="row g-3">
-        {{ form.hidden_tag() }}
-        <div class="col-12">
-            <div class="form-label">{{ form.contact_name.label }}</div>
-            {{ form.contact_name(class="form-control", required=False) }}
-            {% for error in form.contact_name.errors %}
-            <small class="error">{{ error }}</small>
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div class="form-label">{{ form.phone_number.label }}</div>
-            {{ form.phone_number(class="form-control", required=False) }}
-            {% for error in form.phone_number.errors %}
-            <small class="error">{{ error }}</small>
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div class="form-label">{{ form.country.label }}</div>
-            {{ form.country(class="form-control", required=False) }}
-            {% for error in form.country.errors %}
-            <small class="error">{{ error }}</small>
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div class="form-label">{{ form.city.label }}</div>
-            {{ form.city(class="form-control", required=False) }}
-            {% for error in form.city.errors %}
-            <small class="error">{{ error }}</small>
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div class="form-label">{{ form.detailed_address.label }}</div>
-            {{ form.detailed_address(class="form-control", required=False) }}
-            {% for error in form.detailed_address.errors %}
-            <small class="error">{{ error }}</small>
-            {% endfor %}
-        </div>
-        <div class="col-12">
-            <div class="choose_state">
-                <div class="col-form-label">{{ form.is_default.label}}</div>
-                {{ form.is_default }}
+         <div class="back-arrow">
+                <a href="{{ url_for('more_addresses') }}" >
+                    <img src="../static/img/arrow.png" alt="arrow_back">
+                </a>
+         </div>
+        <h1>Please create:</h1>
+        <form action="" method="post" name="address" id="address" class="row g-3">
+            {{ form.hidden_tag() }}
+            <div class="col-12">
+                <div class="form-label">{{ form.contact_name.label }}</div>
+                {{ form.contact_name(class="form-control", required=False) }}
+                {% for error in form.contact_name.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
             </div>
-        </div>
-        <input type="submit" value="Submit" class="btn submit_btn w-100">
-    </form>
+            <div class="col-12">
+                <div class="form-label">{{ form.phone_number.label }}</div>
+                {{ form.phone_number(class="form-control", required=False) }}
+                {% for error in form.phone_number.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="form-label">{{ form.country.label }}</div>
+                {{ form.country(class="form-control", required=False) }}
+                {% for error in form.country.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="form-label">{{ form.city.label }}</div>
+                {{ form.city(class="form-control", required=False) }}
+                {% for error in form.city.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="form-label">{{ form.detailed_address.label }}</div>
+                {{ form.detailed_address(class="form-control", required=False) }}
+                {% for error in form.detailed_address.errors %}
+                <small class="error">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="choose_state">
+                    <div class="col-form-label">{{ form.is_default.label}}</div>
+                    {{ form.is_default }}
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btn submit_btn w-100">
+        </form>
     </div>
-    <script src="../static/lib/Jquery/jquery.js"></script>
-    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

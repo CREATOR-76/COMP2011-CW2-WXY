@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.checkbox');
-    const selectAllCheckbox = document.getElementById('select-all');
     const totalPriceElement = document.getElementById('total-price');
     const selectedCountElement = document.getElementById('selected-count');
     const clearCartButton = document.getElementById('clear-cart');
@@ -21,27 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
         selectedCountElement.textContent = selectedCount;
     }
 
-    // 单选框改变时更新总价和全选状态
+    // 单选框改变时更新总价
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
             updateSummary();
-
-            // 检查是否需要更新“全选”状态
-            const allChecked = [...checkboxes].every(cb => cb.checked);
-            selectAllCheckbox.checked = allChecked;
         });
-    });
-
-    // 全选复选框改变时，控制所有单选框状态
-    selectAllCheckbox.addEventListener('change', function () {
-        const isChecked = this.checked;
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = isChecked;
-        });
-        updateSummary();
     });
 
     // 初始化总价和选中数量
     updateSummary();
 });
-

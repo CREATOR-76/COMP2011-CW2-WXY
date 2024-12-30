@@ -299,52 +299,7 @@ def product_detail(product_id):
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    form = ProfileForm(obj=current_user)
-    password_form = PasswordForm()
     if request.method == 'POST':
-        # 修改个人信息
-        if form.validate_on_submit():
-            username = form.username.data
-            email = form.email.data
-
-            # 检查用户名和邮箱是否已存在
-            existing_username = User.query.filter_by(username=username).first()
-            existing_email = User.query.filter_by(email=email).first()
-
-            if existing_username and existing_username.id != current_user.id:
-                flash('The username already exists!', 'fail')
-                return redirect(url_for('profile'))
-
-            if existing_email and existing_email.id != current_user.id:
-                flash('The email already has the account!', 'fail')
-                return redirect(url_for('profile'))
-
-            current_user.username = username
-            current_user.email = email
-            db.session.commit()
-            flash('Your personal information has been updated!', 'success')
-
-            # 更新密码
-        if password_form.validate_on_submit():
-            current_password = password_form.current_password.data
-            new_password = password_form.new_password.data
-            confirm_new_password = password_form.confirm_new_password.data
-
-            # 验证当前密码是否正确
-            if not check_password_hash(current_user.password, current_password):
-                flash('Incorrect current password!', 'danger')
-                return redirect(url_for('profile'))
-
-            # 检查新密码和确认密码是否匹配
-            if new_password != confirm_new_password:
-                flash('Passwords do not match!', 'danger')
-                return redirect(url_for('profile'))
-
-            # 更新密码
-            current_user.password = generate_password_hash(new_password)
-            db.session.commit()
-            flash('Your password has been updated!', 'success')
-
         if 'avatar' in request.files:
             avatar = request.files['avatar']
             if avatar and allowed_file(avatar.filename):
@@ -362,15 +317,82 @@ def profile():
     default_address = Address.query.filter_by(is_default=True, user_id=current_user.id).first()
 
     return render_template('profile.html',
-                           form=form,
+
                            user=current_user,
                            default_address=default_address,
-                           password_form=password_form)
+                           )
 
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/profile/change_name', methods=['GET', 'POST'])
+@login_required
+def change_name():
+    form = ProfileForm(obj=current_user)
+    if request.method == 'POST':
+        # 修改个人信息
+        if form.validate_on_submit():
+            username = form.username.data
+            email = form.email.data
+
+            # 检查用户名和邮箱是否已存在
+            existing_username = User.query.filter_by(username=username).first()
+            existing_email = User.query.filter_by(email=email).first()
+
+            if existing_username and existing_username.id != current_user.id:
+                flash('The username already exists!', 'fail')
+                return redirect(url_for('change_name'))
+
+            if existing_email and existing_email.id != current_user.id:
+                flash('The email already has the account!', 'fail')
+                return redirect(url_for('change_name'))
+
+            current_user.username = username
+            current_user.email = email
+            db.session.commit()
+            flash('Your personal information has been updated!', 'success')
+
+            db.session.commit()
+
+            return redirect(url_for('change_name'))
+    return render_template('change_user.html',
+                           form=form,
+                           user=current_user)
+
+
+@app.route('/profile/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    password_form = PasswordForm()
+    if request.method == 'POST':
+        if password_form.validate_on_submit():
+            current_password = password_form.current_password.data
+            new_password = password_form.new_password.data
+            confirm_new_password = password_form.confirm_new_password.data
+            # 验证当前密码是否正确
+            if not check_password_hash(current_user.password, current_password):
+                flash('Incorrect current password!', 'fail')
+                return redirect(url_for('change_password'))
+
+            # 检查新密码和确认密码是否匹配
+            if new_password != confirm_new_password:
+                flash('Passwords do not match!', 'fail')
+                return redirect(url_for('change_password'))
+            # 更新密码
+            current_user.password = generate_password_hash(new_password)
+            db.session.commit()
+            flash('Your password has been updated!', 'success')
+
+            db.session.commit()
+
+            return redirect(url_for('change_password'))
+
+    return render_template('change_password.html',
+                           user=current_user,
+                           password_form=password_form)
 
 
 # 展示所有地址信息
@@ -388,6 +410,10 @@ def more_addresses():
 def add_address():
     form = AddressForm()
     if form.validate_on_submit():
+        if Address.query.filter_by(user_id=current_user.id, is_default=True).first():
+            # 如果已有默认地址，禁止将新地址设为默认地址
+            form.is_default.data = False
+            flash("There already has the default address!")
         # 创建新地址实例
         new_address = Address(
             user_id=current_user.id,
@@ -418,17 +444,27 @@ def edit_address(address_id):
         return redirect(url_for('more_addresses'))
 
     if request.method == 'POST':
-        # 获取表单提交的数据
-        address.contact_name = request.form['contact_name']
-        address.phone_number = request.form['phone_number']
-        address.country = request.form['country']
-        address.city = request.form['city']
-        address.detailed_address = request.form['detailed_address']
-        address.is_default = 'is_default' in request.form  # 根据复选框选择是否设置为默认
+        if form.validate_on_submit():
+            if form.is_default.data :
+                # 排除当前编辑的地址，检查其他是否已有默认地址
+                existing_default_address = Address.query.filter_by(user_id=current_user.id, is_default=True).first()
+                if existing_default_address and existing_default_address.id != address.id:
+                    flash(
+                        'You can only have one default address. '
+                        'Please unset the default on the existing one before setting this as default.',
+                        'fail')
+                    return redirect(url_for('edit_address', address_id=address.id))
+            # 获取表单提交的数据
+            address.contact_name = form.contact_name.data
+            address.phone_number = form.phone_number.data
+            address.country = form.country.data
+            address.city = form.city.data
+            address.detailed_address = form.detailed_address.data
+            address.is_default = form.is_default.data  # 根据复选框选择是否设置为默认
 
-        db.session.commit()
-        flash('Address updated successfully!', 'success')
-        return redirect(url_for('more_addresses'))
+            db.session.commit()
+            flash('Address updated successfully!', 'success')
+            return redirect(url_for('more_addresses'))
 
     # GET 请求，展示地址编辑表单
     return render_template('edit_address.html',
@@ -720,7 +756,7 @@ def payment(order_id):
 
         else:
             # 如果用户取消支付，重定向到商品页面
-            return redirect(url_for('products', category='all'))
+            return redirect(url_for('orders', category='UNPAID'))
 
     return render_template('payment.html',
                            order=order,
@@ -738,10 +774,10 @@ def select_address(order_id):
 
         # 根据支付操作进行处理
         if action == 'Confirm payment':
-            selected_address = Address.query.get(address_id)
-            if not selected_address:
+            if not address_id:
                 flash('Please select an address to proceed with payment.', 'fail')
                 return redirect(url_for('select_address', order_id=order_id))
+            selected_address = Address.query.get(address_id)
             order.address_id = selected_address.id
             order.status = OrderStatus.UNSHIPPED
             db.session.commit()
@@ -750,7 +786,7 @@ def select_address(order_id):
             # 处理取消支付逻辑
             order.status = OrderStatus.UNPAID
             db.session.commit()
-            return redirect(url_for('products', category='all'))
+            return redirect(url_for('orders', category='UNPAID'))
 
     return render_template('address_select.html', order=order, addresses=addresses)
 

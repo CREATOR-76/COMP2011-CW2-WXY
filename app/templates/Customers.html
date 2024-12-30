@@ -65,9 +65,9 @@
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm border-light">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">{{ user.username }}</h5>
+                    <h5 class="card-title">{{ user.username }}</h5>
                     <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
-                    <a href="{{ url_for('user_action', user_id=user.id) }}" class="btn btn-info btn-sm">View Actions</a>
+                    <a href="{{ url_for('user_action', user_id=user.id) }}" class="btn btn-sm deliver">View Actions</a>
                 </div>
             </div>
         </div>

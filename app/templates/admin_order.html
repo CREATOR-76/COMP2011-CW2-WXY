@@ -108,14 +108,14 @@
                                      {% if order.status.name == 'UNSHIPPED' %}
                                     <form action="" method="post">
                                         <input type="hidden" name="order_id" value="{{ order.id }}">
-                                        <button type="submit" class="btn btn-primary btn-sm">Deliver</button>
+                                        <button type="submit" class="btn btn-sm deliver">Deliver</button>
                                     </form>
                                 {% endif %}
                                 </td>
                                 <td>{{ order.user_id }}</td>
                                 <td>{{ order.order_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                                 <td>
-                                    <a href="{{ url_for('order_detail', order_id=order.id) }}" class="btn btn-primary btn-sm">View Details</a>
+                                    <a href="{{ url_for('order_detail', order_id=order.id) }}" class="btn btn-sm">View Details</a>
                                 </td>
                             </tr>
                             {% endfor %}

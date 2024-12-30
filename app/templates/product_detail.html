@@ -42,10 +42,6 @@
                             <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
                         </ul>
                     </li>
-                    <!-- Self-Pick -->
-                    <li class="nav-item me-4">
-                        <a class="nav-link" href="#">Self-Pick</a>
-                    </li>
                     <!-- search -->
                     <li class="nav-item me-4 search position-relative">
                         <form class="d-flex" action="{{ url_for('products', category=category if category else 'all') }}" method="get">

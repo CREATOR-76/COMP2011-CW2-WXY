@@ -5,6 +5,7 @@
     <title>More address</title>
     <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/js/flash.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -38,10 +39,6 @@
                             <li><a class="dropdown-item" href="{{ url_for('products', category='accessory')}}">Accessories</a></li>
                         </ul>
                     </li>
-                    <!-- Self-Pick -->
-                    <li class="nav-item me-4">
-                        <a class="nav-link" href="#">Self-Pick</a>
-                    </li>
                     <!-- search -->
                     <li class="nav-item me-4 search position-relative">
                         <form class="d-flex" action="{{ url_for('products', category=category) }}" method="get">
@@ -67,75 +64,79 @@
         </div>
     </nav>
     <main id="edit_address">
-    <div class="container_create edit">
-        <h1>Please edit:</h1>
-        <form method="POST" class="row g-3">
-            {{ form.hidden_tag() }}
-            <div class="col-12">
-                <div class="form-label">{{form.contact_name.label}}</div>
-                {{ form.contact_name(class='form-control', required=False) }}
-                {% for error in form.contact_name.errors %}
-                <small class="error">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-md-12">
-                <div class="form-label">{{ form.phone_number.label }}</div>
-                {{ form.phone_number(class='form-control', required=False) }}
-                {% for error in form.phone_number.errors %}
-                <small class="error">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12">
-                <div class="col-form-label" >{{ form.country.label }}</div>
-                {{ form.country(class='form-control') }}
-                {% for error in form.country .errors %}
-                <small lass="error">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12">
-                <div class="col-form-label">{{ form.city.label }}</div>
-                {{form.city(class="form-control", required=False)}}
-                {% for error in form.city.errors %}
-                <small class="error">>{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12">
-                <div class="col-form-label">{{ form.detailed_address.label }}</div>
-                {{form.detailed_address(class="form-control", required=False)}}
-                {% for error in form.detailed_address.errors %}
-                <small class="error">>{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="col-12">
-                <div class="choose_state">
-                    <div class="col-form-label">{{ form.is_default.label}}</div>
-                    {{ form.is_default(class="checkbox") }}
-                </div>
-            </div>
-            <div class="col-6">
-                <button type="submit" class="btn submit_btn">Save Address</button>
-            </div>
-        </form>
-    </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <ul class="flash-messages">
-        {% for category, message in messages %}
-        {% if category == 'success' %}
-        <li class="flash-message alert alert-success">
-            {{ message }}
-        </li>
-        {% elif category == 'fail' %}
-        <li class="flash-message alert alert-danger">
-            {{ message }}
-        </li>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for category, message in messages %}
+            {% if category == 'success' %}
+            <li class="flash-message alert alert-success">
+                {{ message }}
+            </li>
+            {% elif category == 'fail' %}
+            <li class="flash-message alert alert-danger">
+                {{ message }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
         {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-
-</main>
+        {% endwith %}
+        <div class="container_create edit">
+            <div class="back-arrow">
+                <a href="{{ url_for('more_addresses') }}" >
+                    <img src="../static/img/arrow.png" alt="arrow_back">
+                </a>
+            </div>
+            <h1>Please edit:</h1>
+            <form action="" method="POST" class="row g-3">
+                {{ form.hidden_tag() }}
+                <div class="col-12">
+                    <div class="form-label">{{form.contact_name.label}}</div>
+                    {{ form.contact_name(class='form-control', required=False) }}
+                    {% for error in form.contact_name.errors %}
+                    <small class="error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <div class="col-md-12">
+                    <div class="form-label">{{ form.phone_number.label }}</div>
+                    {{ form.phone_number(class='form-control', required=False) }}
+                    {% for error in form.phone_number.errors %}
+                    <small class="error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <div class="col-12">
+                    <div class="col-form-label" >{{ form.country.label }}</div>
+                    {{ form.country(class='form-control') }}
+                    {% for error in form.country .errors %}
+                    <small class="error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <div class="col-12">
+                    <div class="col-form-label">{{ form.city.label }}</div>
+                    {{form.city(class="form-control", required=False)}}
+                    {% for error in form.city.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <div class="col-12">
+                    <div class="col-form-label">{{ form.detailed_address.label }}</div>
+                    {{form.detailed_address(class="form-control", required=False)}}
+                    {% for error in form.detailed_address.errors %}
+                    <small class="error">>{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <div class="col-12">
+                    <div class="choose_state">
+                        <div class="col-form-label">{{ form.is_default.label}}</div>
+                        {{ form.is_default(class="checkbox") }}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn submit_btn">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </main>
 
 </body>
 </html>

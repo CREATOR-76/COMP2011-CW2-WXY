@@ -48,6 +48,7 @@ class ProfileForm(FlaskForm):
                                                    Length(min=3, max=20, message='The length must between 3 to 20!')])
     email = StringField('Email', validators=[DataRequired(message='Email can not be empty!'),
                                              Email(message='Please enter a valid email address!')])
+    submit = SubmitField('Update')
 
 
 class PasswordForm(FlaskForm):
@@ -67,6 +68,7 @@ class PasswordForm(FlaskForm):
     confirm_new_password = PasswordField('Confirm Password', validators=[DataRequired(message='Password can not be empty!'),
                                                                      EqualTo('password',
                                                                              message='Password inconsistency')])
+    submit = SubmitField('Update Password')
 
 
 # 地址
