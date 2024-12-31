@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
-                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+                <img src="../static/img/logo.png" alt="SweetsParadise brand logo"> SweetsParadise
             </a>
             <!-- Switch button: can be displayed on a small screen -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
                             <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
                             <input type="hidden" name="category" value="{{ category if category else 'all' }}">
                             <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
-                            <button type="submit" class="btn search-btn"></button>
+                            <button type="submit" class="btn search-btn" aria-label="search"></button>
                         </form>
                     </li>
                     <!-- cart -->
@@ -68,7 +68,7 @@
             <table class="table table-hover">
                 <thead class="table_head">
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col">Choose</th>
                     <th scope="col">Product</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
@@ -80,7 +80,7 @@
                 {% if products %}
                 {% for product in products  %}
                 <tr>
-                    <th scope="row">
+                    <td scope="row">
                         <form action="{{ url_for('cart')}}" method="POST">
                             <input type="hidden" name="product_id" value="{{ product.id }}">
                             <input type="hidden" name="action" value="choose">
@@ -88,7 +88,7 @@
                                    {% if product.is_chosen %} checked {% endif %}
                                    onchange="this.form.submit()" aria-label="choose_status">
                         </form>
-                    </th>
+                    </td>
                     <td>
                         <a href="{{ url_for('product_detail', product_id=product.id)}}">
                             <img src="{{ product.image_url }}" alt="{{ product.name }}">
@@ -100,7 +100,7 @@
                         <form action="{{ url_for('cart') }}" method="POST">
                             <input type="hidden" name="product_id" value="{{ product.id }}">
                             <input type="hidden" name="action" value="update">
-                            <input type="number" name="quantity" value="{{ product.quantity }}" min="1" max='10' class="quantity-input">
+                            <input type="number" name="quantity" value="{{ product.quantity }}" min="1" max='10' class="quantity-input" aria-label="quantity">
                             <button type="submit" class="btn btn-up">Update</button>
                         </form>
                     </td>

@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
-                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+                <img src="../static/img/logo.png" alt="SweetsParadise brand logo"> SweetsParadise
             </a>
             <!-- Switch button: can be displayed on a small screen -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
                             <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
                             <input type="hidden" name="category" value="{{ category if category else 'all' }}">
                             <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
-                            <button type="submit" class="btn search-btn"></button>
+                            <button type="submit" class="btn search-btn" aria-label="search"></button>
                         </form>
                     </li>
                     <!-- cart -->
@@ -89,25 +89,25 @@
                     <div class="order-status-container">
                         <div class="order-status">
                             <a href="{{ url_for('orders', category='ALL') }}">
-                                <img src="../static/img/all.png">
+                                <img src="../static/img/all.png" alt="All the order">
                                 <h6>All Orders</h6>
                             </a>
                         </div>
                         <div class="order-status">
                             <a href="{{ url_for('orders', category='UNPAID') }}">
-                                <img src="../static/img/UNPAID.png">
+                                <img src="../static/img/UNPAID.png" alt="The order unpaid">
                                 <h6>Pending Payment</h6>
                             </a>
                         </div>
                         <div class="order-status">
                             <a href="{{ url_for('orders', category='UNSHIPPED') }}">
-                                <img src="../static/img/UNSHIPPED.png">
+                                <img src="../static/img/UNSHIPPED.png" alt="The order unshipped">
                                 <h6>Pending Shipment</h6>
                             </a>
                         </div>
                         <div class="order-status">
                             <a href="{{url_for('orders', category='UNRECEIVED') }}">
-                                <img src="../static/img/UNRECEIVED.png">
+                                <img src="../static/img/UNRECEIVED.png" alt="The order unreceived">
                                 <h6>Pending Receipt</h6>
                             </a>
                         </div>
@@ -117,7 +117,6 @@
                     <div class="address-header">
                         <h3>Address</h3>
                     </div>
-                    <!-- 默认地址 -->
                     <div class="default-address">
                         {% if default_address %}
                         <p>contact_name:{{ default_address.contact_name }}</p>
@@ -127,7 +126,6 @@
                         <p>There is no default address. Please add a default address.</p>
                         {% endif %}
                     </div>
-                    <!-- 更多地址按钮 -->
                     <div class="more-address" onclick="window.location.href='profile/more-addresses'">
                         More address
                     </div>
@@ -142,7 +140,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>

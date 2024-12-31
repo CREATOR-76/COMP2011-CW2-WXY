@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ all_module_code }}</title>
+    <title>Orders</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
     <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -62,25 +62,25 @@
             <ul class="tab row">
                 <li class="tab-item col {% if category == 'ALL' %}active{% endif %}">
                     <a href="{{ url_for('order_admin', category='ALL') }}">
-                        <img src="{{ url_for('static', filename='img/all.png') }}">
+                        <img src="{{ url_for('static', filename='img/all.png') }}" alt="All the order">
                         All Orders
                     </a>
                 </li>
                 <li class="tab-item col {% if category == 'UNPAID' %}active{% endif %}">
                     <a href="{{ url_for('order_admin', category='UNPAID') }}">
-                        <img src="{{ url_for('static', filename='img/UNPAID.png') }}">
+                        <img src="{{ url_for('static', filename='img/UNPAID.png') }}" alt="The order unpaid">
                         Pending Payment
                     </a>
                 </li>
                 <li class="tab-item col {% if category == 'UNSHIPPED' %}active{% endif %}">
                     <a href="{{ url_for('order_admin', category='UNSHIPPED') }}">
-                        <img src="{{ url_for('static', filename='img/UNSHIPPED.png') }}">
+                        <img src="{{ url_for('static', filename='img/UNSHIPPED.png') }}" alt="The order unshipped">
                         Pending Shipment
                     </a>
                 </li>
                 <li class="tab-item col {% if category == 'UNRECEIVED' %}active{% endif %}">
                     <a href="{{ url_for('order_admin', category='UNRECEIVED') }}">
-                        <img src="{{ url_for('static', filename='img/UNRECEIVED.png') }}">
+                        <img src="{{ url_for('static', filename='img/UNRECEIVED.png') }}" alt="The order unreceived">
                         Pending Receipt
                     </a>
                 </li>

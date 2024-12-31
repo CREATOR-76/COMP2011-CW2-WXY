@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ all_module_code }}</title>
+    <title>Product</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
     <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -61,7 +61,7 @@
         <form class="d-flex" action="{{ url_for('edit_product') }}" method="get">
             <input type="hidden" name="search" value="search_products">
             <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
-            <button type="submit" class="btn search-btn"></button>
+            <button type="submit" class="btn search-btn" aria-label="search"></button>
         </form>
     </div>
     <div class="container" id="product" >
@@ -78,7 +78,7 @@
             {% for product in display_product %}
             <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-4">
                 <div class="product-card">
-                    <a href="{{ url_for('edit', id=product.id) }}">
+                    <a href="{{ url_for('edit', product_id=product.id) }}">
                     <img src="{{ product.image_url }}" alt="{{ product.name }}">
                     <h5>{{ product.name }}</h5>
                 </a>

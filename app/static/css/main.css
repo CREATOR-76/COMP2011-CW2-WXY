@@ -1,4 +1,4 @@
-/*全局*/
+/*overall*/
 @font-face {
     font-family: 'kaushan_scriptregular';
     src: url('../font/kaushanscript-regular-webfont.woff2') format('woff2'),
@@ -19,11 +19,10 @@ body{
     padding-top: 110px;
 }
 
-/* 去掉链接样式 */
 a {
-    text-decoration: none; /* 去掉下划线 */
-    color: inherit;        /* 继承父元素的颜色 */
-    display: block;        /* 使整个链接区域可点击 */
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .container_create{
@@ -33,13 +32,12 @@ a {
     padding: 30px;
     border-radius: 12px;
     font-weight: bolder;
-    margin: 100px;
-    margin-top: 10px;
+    margin: 10px 100px 100px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .container_create h1{
     text-align: center;
-    color: #e07c64;
+    color: #de6b4f;
 }
 
 .container_create .form-label{
@@ -48,6 +46,7 @@ a {
 
 input[type="text"],
 input[type="date"],
+input[type='password'],
 select {
     border: 2px solid rgba(6, 8, 9, 0.98);
     background-color: rgba(255, 255, 255, 0.44);
@@ -72,7 +71,7 @@ select {
 .container_create .submit_btn{
     font-weight: bold;
     color: white;
-    background-color: #ff5d45;
+    background-color: #d0412c;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -111,12 +110,12 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-/*导航栏*/
+/*nav*/
 .navbar {
-    background-color: white;  /* 设置背景颜色为白色 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* 添加阴影效果，效果为稍微浮动的阴影 */
-    padding-top: 20px;  /* 增加顶部内边距 */
-    padding-bottom: 20px;  /* 增加底部内边距 */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .navbar-nav .nav-item {
@@ -125,16 +124,16 @@ select {
 }
 
 .navbar-nav .nav-link {
-    color: rgba(6, 8, 9, 0.98);  /* 设置导航项文字颜色 */
+    color: rgba(6, 8, 9, 0.98);
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
-    text-decoration: underline;  /* 添加下划线 */
-    font-weight: bold;  /* 设置加粗效果 */
+    text-decoration: underline;
+    font-weight: bold;
 }
 .navbar-nav .active{
-    text-decoration: underline;  /* 添加下划线 */
+    text-decoration: underline;
     font-weight: bold;
 }
 
@@ -148,10 +147,9 @@ select {
     margin-right: 20px;
 }
 
-/* 响应式设计：导航栏在小屏幕上的调整 */
 @media (max-width: 900px) {
     .navbar {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* 小屏幕时阴影稍微减弱 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .navbar-nav .nav-item {
@@ -161,20 +159,20 @@ select {
 }
 
 .navbar-brand img {
-    width: 60px; /* 控制logo的大小 */
+    width: 60px;
 }
 .navbar-brand{
     font-family:'kaushan_scriptregular', cursive, sans-serif;
     font-size: x-large;
 }
 .dropdown-menu {
-    left: 0 !important; /* 确保下拉菜单正确对齐 */
+    left: 0 !important;
 }
 
 .search .form-control {
-    padding-right: 30px;  /* 给输入框右边留出空间，避免按钮与文本重叠 */
+    padding-right: 30px;
 }
-/*下拉框样式*/
+
 .dropdown-menu {
     background-color: #ffffff;
     padding-top: 0;
@@ -192,13 +190,12 @@ select {
     border-radius: 0.25rem;
 }
 
-/* 搜索按钮样式 */
-/* 搜索框容器位置 */
+
+/* search */
 .search .form-control {
-    padding-right: 30px;  /* 给输入框右边留出空间，避免按钮与文本重叠 */
+    padding-right: 30px;
 }
 
-/* 搜索按钮样式 */
 .search .form-control:focus {
     box-shadow: none;
     border-color: black;
@@ -213,22 +210,20 @@ select {
     background-color: transparent;
     background-size: contain;
     background-repeat: no-repeat;
-    right: 25px;  /* 调整为适当的右间距 */
+    right: 25px;
     top: 40%;
     transform: translateY(-50%);
 }
 
-/* 添加按钮的hover效果（变大） */
 .search .search-btn:hover {
-    transform: translateY(-50%) scale(1.2);  /* 鼠标悬停时按钮变大 */
+    transform: translateY(-50%) scale(1.2);
 }
 
-/* 为按钮点击时的focus状态添加样式 */
 .search .search-btn:focus {
-    outline: none;  /* 去除默认的focus边框 */
-    transform: translateY(-50%) scale(1.2);  /* 同样点击时按钮变大 */
+    outline: none;
+    transform: translateY(-50%) scale(1.2);
 }
-/* 响应式调整：当屏幕小于900px时，修改搜索框和按钮大小 */
+
 @media (max-width: 900px) {
     .search .form-control {
         font-size: 0.9rem;
@@ -243,63 +238,63 @@ select {
     margin-bottom: 20px;
 }
 
-/*轮播图*/
+/*slideshow*/
 .carousel {
     position: relative;
-    width: 100%;  /* 确保轮播图宽度为100% */
-    max-width: 100%;  /* 最大宽度为100% */
-    height: 800px;  /* 设置固定高度，或者根据需要调整 */
-    overflow: hidden;  /* 防止超出容器的部分显示 */
+    width: 100%;
+    max-width: 100%;
+    height: 800px;
+    overflow: hidden;
 }
 
-/* 轮播项图片样式 */
 .carousel-inner .carousel-item img {
-    width: 100%;  /* 图片宽度为100% */
-    height: 100%;  /* 图片高度为100%，填充父容器 */
-    object-fit: cover;  /* 确保图片能够填满整个轮播区域并保持比例 */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-/* 修改轮播箭头位置 */
 .carousel-control-prev, .carousel-control-next {
-    font-size: 30px;  /* 设置箭头的字体大小 */
-    background-color: rgb(224, 124, 100);  /* 半透明的背景，增强对比 */
-    border-radius: 50%;  /* 使箭头背景为圆形 */
-    width: 40px;  /* 设置按钮的宽度 */
-    height: 40px;  /* 设置按钮的高度 */
-    position: absolute;  /* 绝对定位 */
-    top: 50%;  /* 垂直居中 */
-    transform: translateY(-50%);  /* 精确居中，调整位置 */
-    z-index: 5;  /* 确保箭头位于内容上方 */
+    font-size: 30px;
+    background-color: #e16c4f;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
 }
 
-/* 向左箭头的位置 */
 .carousel-control-prev {
-    left: 10px;  /* 向左偏移10px */
+    left: 10px;
 }
 
-/* 向右箭头的位置 */
+
 .carousel-control-next {
-    right: 10px;  /* 向右偏移10px */
+    right: 10px;
 }
 
-/* 鼠标悬停时的效果 */
+
 .carousel-control-prev:hover, .carousel-control-next:hover {
-    background-color: rgb(224, 124, 100);  /* 增加悬停时的背景色深度 */
-    color: #ffffff;  /* 鼠标悬停时箭头颜色改为白色 */
+    background-color: #e16c4f;
+    color: #ffffff;
 }
 
-/* 默认情况下，设置较大的字体和间距 */
+
 .carousel-caption h5 {
-    font-size: 2.5rem;  /* 大屏幕字体大小 */
+    font-size: 2.5rem;
     font-weight: bold;
-    color: #fff;
+    color: #e16c4f;
+}
+.carousel-caption .more1{
+    color: #b75037;
 }
 .carousel-item .slider_2 h5, .carousel-item .slider_2 p, .carousel-caption .more2{
     color: #f5ce83;
 }
 
 .carousel-caption p {
-    font-size: 1.8rem;  /* 大屏幕下的描述字体大小 */
+    font-size: 1.8rem;
 }
 
 .carousel-caption {
@@ -308,10 +303,12 @@ select {
     top: 60%;
     left: 30%;
     transform: translate(-50%, -50%);
-    color: white;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    color: #e16c4f;
+    border-radius: 10px;
     text-align: center;
 }
+
+
 .carousel-caption .more1, .carousel-caption .more2{
     font-size: 1.2rem;
 }
@@ -322,47 +319,47 @@ select {
     }
 
     .carousel-caption h5 {
-        font-size: 1.8rem;  /* 略小的标题字体 */
+        font-size: 1.8rem;
     }
 
     .carousel-caption p {
-        font-size: 1rem;  /* 略小的描述字体 */
+        font-size: 1rem;
     }
     .carousel-caption .more1, .carousel-caption .more2{
         font-size: 0.8rem;
     }
 }
 
-/* 适应屏幕宽度为 660px 以下 */
+
 @media (max-width: 660px) {
     .carousel {
-        height: 250px;  /* 小屏幕时调整高度 */
+        height: 250px;
     }
 
     .carousel-caption h5 {
-        font-size: 1.5rem;  /* 更小的标题字体 */
+        font-size: 1.5rem;
     }
 
     .carousel-caption p {
-        font-size: 0.9rem;  /* 更小的描述字体 */
+        font-size: 0.9rem;
     }
     .carousel-caption .more1, .carousel-caption .more2{
         font-size: 0.4rem;
     }
 
-    /* 为了更好地适应小屏幕，调整文字间距 */
+
     .carousel-caption {
-        padding: 0.5rem;  /* 减少 padding，避免文字太挤 */
+        padding: 0.5rem;
     }
 }
 
 @media (max-width: 400px) {
     .carousel {
-        height: 200px;  /* 更小的高度 */
+        height: 200px;
     }
 
     .carousel-caption h5 {
-        font-size: 1.2rem;  /* 更小的标题字体 */
+        font-size: 1.2rem;
     }
 
     .carousel-caption p {
@@ -372,17 +369,17 @@ select {
         font-size: 0.3rem;
     }
 
-    /* 更紧凑的文字间距 */
+
     .carousel-caption {
-        padding: 0.1rem;  /* 更紧凑的 padding */
+        padding: 0.1rem;
     }
 }
 
 
-/* 响应式调整：小屏幕时调整箭头样式 */
+
 @media (max-width: 768px) {
     .carousel-control-prev, .carousel-control-next {
-        font-size: 25px;  /* 在小屏幕下稍微减小箭头的大小 */
+        font-size: 25px;
     }
 }
 
@@ -393,13 +390,13 @@ select {
 }
 @media (max-width: 660px) {
     .carousel {
-        height: 250px;  /* 小屏幕上，适当调整高度 */
+        height: 250px;
     }
 }
 /*主页*/
 .Transition h3{
     font-family: poetsenone, cursive, sans-serif;
-    color: #e07c64;
+    color: #e16c4f;
     margin-bottom: 30px;
 }
 .Transition{
@@ -419,14 +416,14 @@ select {
 }
 
 .card-body img {
-    width: 100%; /* 图片自适应容器宽度 */
+    width: 100%;
     transition: transform 0.3s ease-in-out;
     border-radius:10px ;
     height: 270px;
 }
 
 .hover-card:hover img {
-    transform: scale(1.1); /* 鼠标悬停时图片放大 */
+    transform: scale(1.1);
 }
 
 .card-img-overlay {
@@ -435,7 +432,7 @@ select {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色遮罩 */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -446,7 +443,7 @@ select {
 }
 
 .hover-card:hover .card-img-overlay {
-    opacity: 1; /* 显示遮罩 */
+    opacity: 1;
 }
 
 .hover-arrow {
@@ -461,8 +458,8 @@ select {
 }
 
 .hover-card:hover .hover-arrow {
-    opacity: 1; /* 显示箭头 */
-    transform: translateX(0); /* 恢复箭头位置 */
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .sell_well{
@@ -480,7 +477,7 @@ select {
     position: absolute;
     top: 10px;
     left: 10px;
-    background-color: rgb(224, 124, 100); /* 半透明黑色背景 */
+    background-color: #e16c4f;
     color: rgb(255, 255, 255);
     padding: 5px 10px;
     font-size: 20px;
@@ -488,21 +485,21 @@ select {
     border-radius: 50%;
 }
 
-/* 标题文字样式 */
+
 .card-text {
-    text-align: center; /* 居中对齐 */
-    margin-top: 10px; /* 与图片卡片保持一定间距 */
+    text-align: center;
+    margin-top: 10px;
 }
 
 .card-title {
-    font-size: 1.25rem; /* 调整标题文字大小 */
-    color: #333; /* 标题文字颜色 */
+    font-size: 1.25rem;
+    color: #333;
     font-weight: bold;
 }
 
 
 
-/*产品界面 */
+
 #product{
     margin-top: 20px;
 }
@@ -517,52 +514,50 @@ select {
     width: 150px;
     padding: 5px;
 }
-/* 美化 select 框 */
+
 .sorting-options select{
-    -webkit-appearance: none;  /* 禁用默认样式 */
-    -moz-appearance: none;     /* 禁用默认样式 */
-    appearance: none;          /* 禁用默认样式 */
-    padding: 5px;        /* 内边距 */
-    border: 2px solid black; /* 边框样式 */
-    border-radius: 4px;        /* 圆角边框 */
-    background-color: white; /* 背景色 */
-    color: black;            /* 字体颜色 */
-    width: 200px;              /* 宽度 */
-    cursor: pointer;           /* 鼠标悬停时显示为手型 */
-    transition: border-color 0.3s ease; /* 边框颜色平滑过渡 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+    width: 200px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
     background-image: url('../img/downarrow.png');
     background-size: 16px 16px;
     background-position: right 10px center;
     background-repeat: no-repeat;
-    padding-right: 40px;
+    padding: 5px 40px 5px 5px;
 }
 
-/* 当 hover 或 focus 时改变边框颜色 */
 .sorting-options select:hover,
 .sorting-options select:focus {
-    outline: none; /* 取消焦点时的蓝色框 */
+    outline: none;
     appearance: none;
 }
-/* option 的 hover 和选中背景 */
+
 .custom-select option {
-    background-color: #f7f7f7; /* 未选中背景 */
-    color: rgba(6, 8, 9, 0.98); /* 字体颜色 */
+    background-color: #f7f7f7;
+    color: rgba(6, 8, 9, 0.98);
 }
 
-/* 调整鼠标悬停时的背景颜色 */
+
 .custom-select option:hover {
-    background-color: #e6e6e6; /* 悬停背景 */
+    background-color: #e6e6e6;
 }
 
-/* 选中项的样式 */
+
 .custom-select option:checked {
-    background-color: #d8d8d8; /* 选中背景 */
-    font-weight: bold; /* 选中加粗 */
+    background-color: #d8d8d8;
+    font-weight: bold;
 }
 
-/* 美化下拉箭头 */
+
 .sorting-options select::-ms-expand {
-    display: none; /* 隐藏 IE 下拉箭头 */
+    display: none;
 }
 
 .back .back_link{
@@ -586,9 +581,9 @@ select {
     background-color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* 垂直排列内容 */
-    justify-content: space-between; /* 保证内容均匀分布 */
-    height: 100%; /* 使得卡片的高度足够容纳所有内容 */
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 .product-card img {
     width: 100%;
@@ -602,7 +597,7 @@ select {
 }
 .product-card .price {
     font-size: 16px;
-    color: #e74c3c;
+    color: #ce3b2d;
     font-weight: bold;
 }
 .product-card .details {
@@ -611,13 +606,13 @@ select {
 }
 .product-card .add-to-cart {
     background-color: rgb(206, 131, 169);
-    color: white;
+    color: black;
     padding: 8px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     width: 100%;
-    margin: 0 auto;  /* 水平居中 */
+    margin: 0 auto;
     transition: background-color 0.3s ease;
 }
 .product-card .add-to-cart:hover {
@@ -625,12 +620,12 @@ select {
 }
 
 .product-card .details, .product-card .price {
-    text-align: left; /* 使价格和细节更自然的左对齐 */
+    text-align: left;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-/*分页*/
+/*paging*/
 .page-container {
     display: flex;
     justify-content: center;
@@ -643,10 +638,8 @@ select {
 .page-btn {
     margin: 0 5px;
     padding: 8px 12px;
-    /*background-color: #8d41f6;*/
     color: black;
     text-decoration: none;
-    /*border-radius: 4px;*/
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -661,7 +654,6 @@ select {
 
 
 .page-btn.active {
-    /*background-color: #480796;*/
     border-bottom: 3px solid rgb(206, 131, 169);
 }
 
@@ -672,7 +664,6 @@ select {
     font-size: 1.2em;
 }
 
-/*每个产品的界面*/
 /* Product Detail Container */
 .product-detail-container {
     display: flex;
@@ -746,11 +737,10 @@ select {
 
 .product-size, .monthly-sales, .product-taste {
     font-size: 16px;
-    color: #777;
+    color: rgba(6, 8, 9, 0.98);
     margin-bottom: 15px;
 }
 /* Quantity Selector */
-/* Quantity Selector Container */
 .quantity-selector {
     display: flex;
     align-items: center;
@@ -765,9 +755,9 @@ select {
     width: 30px;
     height: 30px;
     background-color: white;
-    border: 2px solid rgb(206, 131, 169);
+    border: 2px solid rgb(136, 76, 61);
     border-radius: 5px;
-    color: rgb(206, 131, 169);
+    color: rgb(136, 76, 61);
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
@@ -824,14 +814,14 @@ input[type="number"] {
 /* Action Buttons */
 .product-actions {
     display: flex;
-    justify-content: center;  /* 中心对齐按钮 */
-    gap: 15px;  /* 按钮之间的间距 */
+    justify-content: center;
+    gap: 15px;
     margin: 20px 0;
 }
 
 .product-actions button {
     background-color: rgb(206, 131, 169);
-    color: white;
+    color: #113254;
     font-size: 16px;
     padding: 12px 24px;
     border: none;
@@ -870,13 +860,13 @@ input[type="number"] {
 #Register {
     width: 100%;
     height:100vh;
-    background-image: linear-gradient(to right top, rgba(232, 245, 232, 0.74) 30%, rgba(253, 235, 201, 0.88) 100%), url("../img/logIn.jpg");
-    background-size: cover; /* 确保背景图覆盖整个屏幕 */
-    background-position: center; /* 背景图居中显示 */
+    background-image: linear-gradient(to right top, rgba(232, 245, 232, 0.74) 30%, rgba(253, 235, 201, 0.88) 100%), url("../img/login.jpg");
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
-    align-items: center; /* 垂直居中和水平居中 */
+    align-items: center;
 }
 
 .login-form, .signup-form {
@@ -885,25 +875,25 @@ input[type="number"] {
     padding: 20px 30px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 700px;
-    width: 100%; /* 确保表单的宽度自适应 */
-    box-sizing: border-box; /* 包含padding和border在内 */
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 0;
 }
 @media (max-width: 768px) {
     .login-form, .signup-form {
-        padding: 15px; /* 较小屏幕时减少内边距 */
+        padding: 15px;
     }
 }
 
 @media (max-width: 480px) {
     .login-form, .signup-form {
-        padding: 10px; /* 在极小屏幕下进一步减少内边距 */
-        max-width: 100%; /* 在超小屏幕上表单宽度占满屏幕 */
+        padding: 10px;
+        max-width: 100%;
     }
 
     #Register {
-        height: 100vh; /* 调整为自适应高度 */
-        padding: 25px; /* 添加一些内边距，避免内容紧贴边缘 */
+        height: 100vh;
+        padding: 25px;
     }
 }
 
@@ -916,7 +906,7 @@ input[type="number"] {
     font-family: "poetsenone", Times, serif;
     letter-spacing: 2px;
 }
-/* 按钮样式 */
+
 #Register .btn {
     padding: 10px 20px;
     font-size: 1rem;
@@ -928,7 +918,7 @@ input[type="number"] {
 
 #Register .submit_btn {
     background-color: #e07c64;
-    color: #fff;
+    color: rgba(6, 8, 9, 0.98);
 }
 .login-form a, .signup-form a{
     color: inherit;
@@ -944,18 +934,18 @@ input[type="number"] {
 /*profile*/
 #profile {
     position: relative;
-    background-image: url('../img/my.jpg'); /* 替换为实际的背景图片路径 */
+    background-image: url('../img/my.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: flex;
-    align-items: center; /* 垂直居中内容 */
-    justify-content: center; /* 水平居中内容 */
-    min-height: 100vh; /* 确保容器至少填满视口 */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     z-index: 1;
 }
 
-/* 在背景图片上添加一层模糊罩 */
+
 #profile::after {
     content: "";
     position: absolute;
@@ -963,9 +953,9 @@ input[type="number"] {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(245, 228, 228, 0.1); /* 半透明的黑色覆盖层 */
-    backdrop-filter: blur(8px); /* 模糊效果 */
-    z-index: -2; /* 使模糊罩在内容下方 */
+    background: rgba(245, 228, 228, 0.1);
+    backdrop-filter: blur(8px);
+    z-index: -2;
 }
 
 .profile-container {
@@ -1028,7 +1018,7 @@ input[type="number"] {
     margin-top: 10px;
     padding: 5px 15px;
     background-color: #e7b65c;
-    color: white;
+    color: rgba(6, 8, 9, 0.98);
     font-size: 18px;
     cursor: pointer;
     border-radius: 4px;
@@ -1041,7 +1031,7 @@ input[type="number"] {
 }
 
 .profile-left .btn-danger {
-    background-color: #e07c64;
+    background-color: #bd3f20;
     margin-top: 10px;
 }
 
@@ -1051,14 +1041,14 @@ input[type="number"] {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 25px;
-    max-width: 800px; /* 限制最大宽度，避免过宽 */
+    max-width: 800px;
     transition: transform 0.3s ease;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .profile-right:hover {
-    transform: scale(1.01); /* 添加轻微的放大效果 */
+    transform: scale(1.01);
 }
 
 .profile-right .section {
@@ -1096,13 +1086,13 @@ input[type="number"] {
 }
 
 .profile-right .order-status:hover {
-    transform: scale(1.05); /* 增加按钮的轻微放大效果 */
+    transform: scale(1.05);
 }
 .order-status img {
     width: 40px;
     height: 40px;
     margin-bottom: 10px;
-    transition: transform 0.3s ease; /* 动画效果 */
+    transition: transform 0.3s ease;
 }
 
 .order-status h6 {
@@ -1113,7 +1103,14 @@ input[type="number"] {
 }
 
 .order-status:hover img {
-    transform: scale(1.1); /* 图标悬停时放大 */
+    transform: scale(1.1);
+}
+.confirm_rec{
+    border: 2px solid black;
+}
+.confirm_rec:hover{
+    background-color: #e7b65c;
+    color: white;
 }
 
 .more-address {
@@ -1134,7 +1131,7 @@ input[type="number"] {
 
 .default-address p {
     margin: 5px 0;
-    color: #6c757d;
+    color: rgba(6, 8, 9, 0.98);
     font-size: 16px;
 }
 
@@ -1156,7 +1153,7 @@ input[type="number"] {
     margin-bottom: 15px;
 }
 .back-arrow {
-    margin-bottom: 20px;  /* 调整返回箭头和表单之间的距离 */
+    margin-bottom: 20px;
 }
 
 .back-arrow img{
@@ -1179,12 +1176,9 @@ input[type="number"] {
 
 .btn-danger:hover {
     background-color: #c82333;
-    transform: scale(1.05); /* 鼠标悬停时按钮放大效果 */
+    transform: scale(1.05);
 }
 
-
-
-/* 登出按钮 */
 .btn-danger {
     display: block;
     margin-top: 20px;
@@ -1202,7 +1196,6 @@ input[type="number"] {
     background-color: #c82333;
 }
 
-/* 响应式布局 */
 @media (max-width: 1000px) {
     .profile-container {
         flex-direction: column;
@@ -1222,12 +1215,7 @@ input[type="number"] {
     }
 }
 
-
-
-
-
-
-/*购物车*/
+/*cart*/
 #cart{
     height: 100vh;
     background-color: rgba(248, 215, 218, 0.79);
@@ -1252,7 +1240,7 @@ input[type="number"] {
 }
 #cart .table_head th{
     background-color: #e7b65c !important;
-    color: white;
+    color: #23405e;
 }
 
 
@@ -1278,7 +1266,7 @@ input[type="number"] {
     font-size: 14px;
 }
 #cart .btn-up{
-    color: white;
+    color: #23405e;
     background-color: #e7b65c;
 }
 
@@ -1321,8 +1309,8 @@ input[type="number"] {
 #cart .cart-summary{
     width: 100%;
     align-items: center;
-    flex-wrap: wrap; /* 允许内容在小屏幕时换行 */
-    z-index: 100; /* 确保在其他内容之上 */
+    flex-wrap: wrap;
+    z-index: 100;
     margin-bottom: 0;
     border-radius: 20px;
 }
@@ -1338,7 +1326,7 @@ input[type="number"] {
 
 .cart-summary .left {
     padding-left: 50px;
-    flex-grow: 1; /* 让左侧内容占据尽可能多的空间 */
+    flex-grow: 1;
 }
 
 .cart-summary .right {
@@ -1350,7 +1338,7 @@ input[type="number"] {
 #pay {
     padding: 10px 20px;
     background-color: #e7b65c;
-    color: #fff;
+    color: #23405e;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -1365,7 +1353,7 @@ input[type="number"] {
     margin-right: 10px;
 }
 
-/* 响应式设计 */
+
 @media (max-width: 768px) {
     #cart{
         font-size: 14px;
@@ -1380,13 +1368,13 @@ input[type="number"] {
         font-size: 12px;
     }
     .cart-summary {
-        padding-right: 10px; /* 减少间距 */
+        padding-right: 10px;
         padding-left: 10px;
     }
 
     #clear-cart,
     #pay {
-        width: 100%; /* 按钮在小屏幕上全宽 */
+        width: 100%;
         margin-bottom: 10px;
     }
 }
@@ -1405,7 +1393,7 @@ input[type="number"] {
 
 }
 
-/*支付页面*/
+/*payment*/
 .payment {
     background-color: #f9f9f9;
     padding: 20px;
@@ -1425,7 +1413,7 @@ input[type="number"] {
 .total-price {
     font-size: 2rem;
     font-weight: bold;
-    color: #E57373;  /* Use a red color for the total price */
+    color: #bd2222;  /* Use a red color for the total price */
     margin-bottom: 20px;
 }
 
@@ -1460,13 +1448,13 @@ input[type="number"] {
 }
 
 .payment-action .btn-confirm {
-    background-color: #4CAF50;  /* Green for confirmation */
-    color: white;
+    background-color: #73af78;  /* Green for confirmation */
+    color: rgba(6, 8, 9, 0.98);
 }
 
 .payment-action .btn-cancel {
-    background-color: #F44336;  /* Red for cancellation */
-    color: white;
+    background-color: #e07c64;  /* Red for cancellation */
+    color: rgba(6, 8, 9, 0.98);
 }
 
 .payment-action .btn:hover {
@@ -1485,8 +1473,7 @@ input[type="number"] {
     border-radius: 10px;
 }
 
-/*订单*/
-/* 选择器和分类标签 */
+/*order*/
 #order_page{
     margin: 20px;
 }
@@ -1516,7 +1503,6 @@ input[type="number"] {
 
 #order_page .tab-item.active {
     background-color: #e7b65c;
-    color: white;
 }
 
 #order_page .tab-item a {
@@ -1525,7 +1511,7 @@ input[type="number"] {
     font-weight: bold;
 }
 
-/* 订单项 */
+
 .orders .order-item {
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1564,7 +1550,6 @@ h2 {
     text-align: center;
 }
 
-/* 表格 */
 #order_page table {
     width: 100%;
     border-collapse: collapse;
@@ -1591,7 +1576,6 @@ h2 {
     background-color: #e07c64;
 }
 
-/* 响应式布局 */
 @media (max-width: 768px) {
     #order_page .row {
         flex-direction: column;
@@ -1635,8 +1619,7 @@ h2 {
     }
 }
 
-/*地址*/
-
+/*address*/
 .page-title {
     text-align: center;
     margin-top: 20px;
@@ -1689,8 +1672,8 @@ h2 {
 }
 
 .address-list .btn-edit {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #84be86;
+    color: rgba(6, 8, 9, 0.98);
     margin-bottom: 10px;
 }
 
@@ -1722,7 +1705,7 @@ input[type="radio"] {
 /* "Add Address" button */
 .btn-add {
     background-color: #e7b65c;
-    color: #fff;
+    color: rgba(6, 8, 9, 0.98);
     padding: 8px 16px;
     font-size: 14px;
     border-radius: 5px;
@@ -1747,13 +1730,12 @@ input[type="radio"] {
     margin: 10px;
 }
 
-/*管理员端*/
+/*Admin*/
 #admin{
     padding-top: 0;
 }
 
 /*Navigation*/
-
 /* Sidebar Styles */
 #sidebar {
     display: flex;
@@ -1776,7 +1758,6 @@ input[type="radio"] {
     text-align: center;
     font-size: 16px;
     border-top: 1px solid #e9ecef;
-    font-style:weight
 }
 .progress {
     position: relative;
@@ -1973,13 +1954,13 @@ ul.components {
 
 .product-card .delete{
     background-color: rgb(206, 131, 169);
-    color: white;
+    color: rgba(0, 0, 0, 0.6);
     padding: 8px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     width: 100%;
-    margin: 0 auto;  /* 水平居中 */
+    margin: 0 auto;   
     transition: background-color 0.3s ease;
 }
 .product-card .delete:hover {
@@ -1989,6 +1970,7 @@ ul.components {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    color: #060809;
 }
 #content th, td {
     padding: 12px 15px;
@@ -1996,8 +1978,8 @@ ul.components {
     border-bottom: 1px solid #ddd;
 }
 
-#content th {
-    background-color: #f5f5f5;
+#content h1{
+    font-family: poetsenone, cursive, sans-serif;
 }
 
 #content tbody tr:hover {

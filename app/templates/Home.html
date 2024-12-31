@@ -5,6 +5,8 @@
     <title>Home</title>
     <link rel="stylesheet" href="../static/lib/bootstrap-5.3.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../static/css/main.css">
+    <script src="../static/lib/Jquery/jquery.js"></script>
+    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -12,7 +14,7 @@
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
-                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+                <img src="../static/img/logo.png" alt="SweetsParadise brand logo"> SweetsParadise
             </a>
             <!-- Switch button: can be displayed on a small screen -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +47,7 @@
                             <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
                             <input type="hidden" name="category" value="{{ category if category else 'all'}}">
                             <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
-                            <button type="submit" class="btn search-btn"></button>
+                            <button type="submit" class="btn search-btn" aria-label="search"></button>
                         </form>
                     </li>
                     <!-- cart -->
@@ -189,7 +191,7 @@
                     <div class="card-body">
                         <span class="number">{{ loop.index }}</span>
                         <a href="{{ url_for('product_detail', product_id=product.id) }}">
-                            <img src="{{ product.image_url }}" alt="image of top4 products">
+                            <img src="{{ product.image_url }}" alt="Top 4 best-selling products this month">
                         </a>
                     </div>
                     <div class="card-text text-center mt-2">
@@ -201,7 +203,5 @@
             </div>
         </div>
     </div>
-    <script src="../static/lib/Jquery/jquery.js"></script>
-    <script src="../static/lib/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

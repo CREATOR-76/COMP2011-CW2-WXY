@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ all_module_code }}</title>
+    <title>Index</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
     <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -106,6 +106,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <div class="row">
         <div class="col-md-6 mb-4">
@@ -139,7 +140,8 @@
             </div>
         </div>
     </div>
-         <a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+    <div class="container">
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
     </div>
 </main>
 

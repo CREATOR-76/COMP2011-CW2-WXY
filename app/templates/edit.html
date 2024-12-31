@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ all_module_code }}</title>
+    <title>Edit Product</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap-5.3.2-dist/css/bootstrap.css') }}">
     <script src="{{ url_for('static', filename='lib/Jquery/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -18,7 +18,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <!--https://www.iconfont.cn-->
-        <img src="../static/img/logo.png" alt="Logo_todolist" class="d-inline-block, align-text-top">
+        <img src="{{ url_for('static', filename='img/logo.png')}}" alt="Logo_todolist" class="d-inline-block, align-text-top">
         <h3>SweetsParadise</h3>
     </div>
     <ul class="list-unstyled components">
@@ -122,7 +122,6 @@
             </div>
         </form>
         </div>
-
 </main>
 
 </body>

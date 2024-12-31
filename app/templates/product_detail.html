@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="#">
-                <img src="../static/img/logo.png" alt="Logo"> SweetsParadise
+                <img src="../static/img/logo.png" alt="SweetsParadise brand logo"> SweetsParadise
             </a>
             <!-- Switch button: can be displayed on a small screen -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +49,7 @@
                             <input type="hidden" name="sort_by" value="{{ request.args.get('sort_by', 'default') }}">
                             <input type="hidden" name="category" value="{{ category if category else 'all' }}">
                             <input class="form-control me-2" name="content" type="text" placeholder="Inquire.." value="{{ request.args.get('content', '') }}" aria-label="Inquire about goods">
-                            <button type="submit" class="btn search-btn"></button>
+                            <button type="submit" class="btn search-btn" aria-label="search"></button>
                         </form>
                     </li>
                     <!-- cart -->
@@ -88,7 +88,7 @@
                 <!-- Quantity Selector -->
                 <div class="quantity-selector">
                     <button type="button" class="quantity-btn decrement">-</button>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="quantity-input">
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="10" class="quantity-input" title="Enter the quantity of items">
                     <button type="button" class="quantity-btn increment">+</button>
                 </div>
                 <div class="product-actions">
