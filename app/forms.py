@@ -66,7 +66,7 @@ class PasswordForm(FlaskForm):
                                                                  message='The password must contain letters and numbers'
                                                                          '(like:password1)')])
     confirm_new_password = PasswordField('Confirm Password', validators=[DataRequired(message='Password can not be empty!'),
-                                                                     EqualTo('password',
+                                                                     EqualTo('new_password',
                                                                              message='Password inconsistency')])
     submit = SubmitField('Update Password')
 

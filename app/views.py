@@ -903,8 +903,6 @@ def edit_product():
         product = Product.query.get_or_404(product_id)
         db.session.delete(product)
         db.session.commit()
-        flash("Product deleted successfully!",
-              "success")
         return redirect(url_for('edit_product'))
 
     return render_template('edit_product.html',
@@ -931,7 +929,7 @@ def edit(product_id):
             db.session.commit()
             flash("Product updated successfully!",
                   "success")
-            return redirect(url_for('edit', id=product.id))
+            return redirect(url_for('edit', product_id=product.id))
     return render_template('edit.html',
                            product=product,
                            form=form)
